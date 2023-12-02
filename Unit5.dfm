@@ -1,9 +1,9 @@
-object Form4: TForm4
-  Left = 311
-  Top = 206
+object Form5: TForm5
+  Left = 241
+  Top = 158
   Width = 1044
   Height = 540
-  Caption = 'Form4'
+  Caption = 'Form5'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,44 +16,58 @@ object Form4: TForm4
   object lbl1: TLabel
     Left = 16
     Top = 192
-    Width = 21
+    Width = 39
     Height = 13
-    Caption = 'KTP'
+    Caption = 'Tanggal'
   end
   object lbl2: TLabel
     Left = 20
     Top = 224
-    Width = 28
+    Width = 65
     Height = 13
-    Caption = 'Nama'
+    Caption = 'Kode member'
   end
   object lbl3: TLabel
     Left = 12
     Top = 252
-    Width = 32
+    Width = 28
     Height = 13
-    Caption = 'Alamat'
+    Caption = 'Nama'
   end
   object Label1: TLabel
     Left = 16
     Top = 280
-    Width = 29
+    Width = 47
     Height = 13
-    Caption = 'Daftar'
+    Caption = 'Jam sewa'
   end
   object Label2: TLabel
     Left = 16
     Top = 312
-    Width = 57
+    Width = 48
     Height = 13
-    Caption = 'Batas Habis'
+    Caption = 'Lapangan'
   end
   object Label3: TLabel
-    Left = 24
+    Left = 16
     Top = 336
-    Width = 27
+    Width = 74
     Height = 13
-    Caption = 'Bayar'
+    Caption = 'Jumlah Bermain'
+  end
+  object Label4: TLabel
+    Left = 8
+    Top = 360
+    Width = 68
+    Height = 13
+    Caption = 'Batas Bermain'
+  end
+  object Label5: TLabel
+    Left = 8
+    Top = 384
+    Width = 59
+    Height = 13
+    Caption = 'No transaksi'
   end
   object edt2: TEdit
     Left = 112
@@ -164,6 +178,20 @@ object Form4: TForm4
     TitleFont.Style = []
     OnCellClick = dbgrd1CellClick
   end
+  object edt7: TEdit
+    Left = 112
+    Top = 360
+    Width = 121
+    Height = 21
+    TabOrder = 13
+  end
+  object edt8: TEdit
+    Left = 112
+    Top = 384
+    Width = 121
+    Height = 21
+    TabOrder = 14
+  end
   object con1: TZConnection
     ControlsCodePage = cGET_ACP
     UTF8StringsAsWideField = False
@@ -187,7 +215,7 @@ object Form4: TForm4
     Connection = con1
     Active = True
     SQL.Strings = (
-      'select * from tbl_regismember')
+      'select * from tbl_sewamember')
     Params = <>
     Left = 140
     Top = 12
