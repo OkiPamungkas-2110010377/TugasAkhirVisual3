@@ -1,8 +1,8 @@
 object Form1: TForm1
   Left = 196
-  Top = 117
-  Width = 1044
-  Height = 540
+  Top = 140
+  Width = 431
+  Height = 517
   Caption = 'Form1'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,23 +13,36 @@ object Form1: TForm1
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 128
+    Top = 56
+    Width = 170
+    Height = 67
+    Caption = 'LOGIN'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -67
+    Font.Name = 'NSimSun'
+    Font.Style = []
+    ParentFont = False
+  end
   object Edit1: TEdit
-    Left = 224
-    Top = 88
+    Left = 144
+    Top = 136
     Width = 121
     Height = 21
     TabOrder = 0
   end
   object Edit2: TEdit
-    Left = 224
-    Top = 120
+    Left = 144
+    Top = 168
     Width = 121
     Height = 21
     TabOrder = 1
   end
   object Button1: TButton
-    Left = 248
-    Top = 176
+    Left = 168
+    Top = 224
     Width = 75
     Height = 25
     Caption = 'Login'

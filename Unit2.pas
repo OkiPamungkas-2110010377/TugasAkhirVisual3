@@ -32,7 +32,7 @@ var
 
 implementation
 
-uses Unit3, Unit4, Unit5, Unit6;
+uses Unit3, Unit4, Unit5, sewanonmember;
 
 {$R *.dfm}
 

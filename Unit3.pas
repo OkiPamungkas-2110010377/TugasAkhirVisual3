@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Grids, DBGrids, DB, ZAbstractRODataset, ZAbstractDataset,
-  ZDataset, ZAbstractConnection, ZConnection, StdCtrls;
+  ZDataset, ZAbstractConnection, ZConnection, StdCtrls, frxClass, frxDBSet,
+  ComCtrls;
 
 type
   TForm3 = class(TForm)
@@ -20,17 +21,19 @@ type
     btn4: TButton;
     btn5: TButton;
     btn6: TButton;
-    edt1: TEdit;
     con1: TZConnection;
     ds1: TDataSource;
     zqry: TZQuery;
     edt4: TEdit;
     edt5: TEdit;
-    edt6: TEdit;
     dbgrd1: TDBGrid;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    frxReport1: TfrxReport;
+    frxDBDataset1: TfrxDBDataset;
+    cb1: TComboBox;
+    date1: TDateTimePicker;
     procedure posisiawaal;
     procedure bersih;
     procedure btn1Click(Sender: TObject);
@@ -40,6 +43,7 @@ type
     procedure btn5Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure dbgrd1CellClick(Column: TColumn);
+    procedure btn6Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -58,12 +62,11 @@ uses Unit2;
 
 procedure TForm3.bersih;
 begin
-edt1.Clear;
 edt2.Clear;
 edt3.Clear;
 edt4.Clear;
 edt5.Clear;
-edt6.Clear;
+cb1.text:= '';
 end;
 
 procedure TForm3.posisiawaal;
@@ -74,12 +77,12 @@ btn2.Enabled:= False;
 btn3.Enabled:= False;
 btn4.Enabled:= False;
 btn5.Enabled:= False;
-edt1.Enabled:= False;
 edt2.Enabled:= False;
 edt3.Enabled:= False;
 edt4.Enabled:= False;
 edt5.Enabled:= False;
-edt6.Enabled:= False;
+cb1.Enabled:= False;
+
 
 end;
 
@@ -91,20 +94,16 @@ btn2.Enabled:= True;
 btn3.Enabled:= False;
 btn4.Enabled:= False;
 btn5.Enabled:= True;
-edt1.Enabled:= True;
+date1.Enabled:= True;
 edt2.Enabled:= True;
 edt3.Enabled:= True;
 edt4.Enabled:= True;
 edt5.Enabled:= True;
-edt6.Enabled:= True;
+cb1.Enabled:= True;
 end;
 
 procedure TForm3.btn2Click(Sender: TObject);
 begin
-if edt1.Text ='' then
-begin
-ShowMessage('TANGGAL TIDAK BOLEH KOSONG!');
-end else
 if edt2.Text ='' then
 begin
 ShowMessage('NAMA TIDAK BOLEH KOSONG!');
@@ -117,17 +116,17 @@ if edt4.Text ='' then
 begin
 ShowMessage('JAM SEWA TIDAK BOLEH KSOSNG');
 end else
-if edt5.Text ='' then
+if cb1.Text ='' then
 begin
 ShowMessage('SEWA HABIS TIDAK BOLEH KSOSNG');
 end else
-if edt6.Text ='' then
+if cb1.Text ='' then
 begin
 ShowMessage('LAPANGAN TIDAK BOLEH KSOSNG');
 end else
 begin
 zqry.SQL.Clear; //simpan
-zqry.SQL.Add('insert into tbl_jadwal values(null,"'+edt1.Text+'","'+edt2.Text+'","'+edt3.Text+'","'+edt4.Text+'","'+edt5.Text+'","'+edt6.Text+'")');
+zqry.SQL.Add('insert into tbl_jadwal values(null,"'+FormatDateTime('yyyy-mm-dd',date1.Date)+'","'+edt2.Text+'","'+edt3.Text+'","'+edt4.Text+'","'+edt5.Text+'","'+cb1.Text+'")');
 zqry.ExecSQL ;
 
 zqry.SQL.Clear;
@@ -140,11 +139,11 @@ end;
 
 procedure TForm3.btn3Click(Sender: TObject);
 begin
-if (edt1.Text= '')or (edt2.Text ='')or(edt3.Text= '') or(edt4.Text= '') or(edt5.Text= '') or(edt6.Text= '')then
+if (edt2.Text ='') or(edt3.Text= '') or(edt4.Text= '') or(edt5.Text= '') or(cb1.Text= '')then
 begin
   ShowMessage('INPUTAN WAJIB DIISI!');
 end else
-if (edt1.Text = zqry.Fields[1].AsString) and (edt2.Text = zqry.Fields[2].AsString) and (edt3.Text = zqry.Fields[3].AsString) and (edt4.Text = zqry.Fields[4].AsString) and (edt5.Text = zqry.Fields[5].AsString) and (edt6.Text = zqry.Fields[6].AsString) then
+if (edt2.Text = zqry.Fields[2].AsString) and (edt3.Text = zqry.Fields[3].AsString) and (edt4.Text = zqry.Fields[4].AsString) and (edt5.Text = zqry.Fields[5].AsString) and (cb1.Text = zqry.Fields[6].AsString) then
 begin
  ShowMessage('DATA TIDAK ADA PERUBAHAN');
  posisiawaal;
@@ -152,7 +151,7 @@ end else
 begin
  ShowMessage('DATA BERHASIL DIUPDATE!');
 zqry.SQL.Clear;
-zqry.SQL.Add('Update tbl_jadwal set tanggal= "'+edt1.Text+'",nama="'+edt2.Text+'",kode_member="'+edt3.Text+'",jam_sewa="'+edt4.Text+'",sewa_habis="'+edt5.Text+'",lapangan="'+edt6.Text+'" where jadwal_id="'+id+'"');
+zqry.SQL.Add('Update tbl_jadwal set tanggal= "'+FormatDateTime('yyyy-mm-dd',date1.Date)+'",nama="'+edt2.Text+'",kode_member="'+edt3.Text+'",jam_sewa="'+edt4.Text+'",sewa_habis="'+edt5.Text+'",lapangan="'+cb1.Text+'" where jadwal_id="'+id+'"');
 zqry. ExecSQL;
 
 zqry.SQL.Clear;
@@ -171,7 +170,7 @@ begin
 zqry.SQL.Add(' delete from tbl_jadwal where jadwal_id="'+id+'"');
 zqry. ExecSQL;
 zqry.SQL.Clear;
-zqry.SQL.Add('select * from tbl_buku');
+zqry.SQL.Add('select * from tbl_jadwal');
 zqry.Open;
 ShowMessage('DATA BERHASIL DIHAPUS');
 posisiawaal;
@@ -196,37 +195,42 @@ btn3.Enabled:=false;
 btn4.Enabled:=false;
 btn5.Enabled:=false;
 btn6.Enabled:=false;
-edt1.Enabled:=false;
+date1.Enabled:=false;
 edt2.Enabled:=false;
 edt3.Enabled:=false;
 edt4.Enabled:=false;
 edt5.Enabled:=false;
-edt6.Enabled:=false;
+cb1.Enabled:=false;
 end;
 
 procedure TForm3.dbgrd1CellClick(Column: TColumn);
 begin
 id:= zqry.Fields[0].AsString;
-edt1.Text:= zqry.Fields[1].AsString;
+
 edt2.Text:= zqry.Fields[2].AsString;
 edt3.Text:= zqry.Fields[3].AsString;
 edt4.Text:= zqry.Fields[4].AsString;
 edt5.Text:= zqry.Fields[5].AsString;
-edt6.Text:= zqry.Fields[6].AsString;
+cb1.Text:= zqry.Fields[6].AsString;
 
 
-edt1.Enabled:= True;
+date1.Enabled:= True;
 edt2.Enabled:= True;
 edt3.Enabled:= True;
 edt4.Enabled:= True;
 edt5.Enabled:= True;
-edt6.Enabled:= True;
+cb1.Enabled:= True;
 btn1.Enabled:= false;
 btn2.Enabled:= False;
 btn3.Enabled:= True;
 btn4.Enabled:= True;
 btn5.Enabled:= True;
-btn6.Enabled:= True;
+cb1.Enabled:= True;
+end;
+
+procedure TForm3.btn6Click(Sender: TObject);
+begin
+frxReport1.ShowReport();
 end;
 
 end.

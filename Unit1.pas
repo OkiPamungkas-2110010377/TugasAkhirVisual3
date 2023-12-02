@@ -15,6 +15,7 @@ type
     con: TZConnection;
     zqry: TZQuery;
     ds1: TDataSource;
+    Label1: TLabel;
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
